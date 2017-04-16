@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -17,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final int STOCK_LOADER = 0;
     @SuppressWarnings("WeakerAccess")
+    @BindView(R.id.coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
     @BindView(R.id.recycler_view)
     RecyclerView stockRecyclerView;
     @SuppressWarnings("WeakerAccess")
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                onRefresh();
             }
         }).attachToRecyclerView(stockRecyclerView);
 
@@ -100,9 +104,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_network));
             error.setVisibility(View.VISIBLE);
+            Snackbar.make(coordinatorLayout, getString(R.string.toast_no_connectivity), Snackbar.LENGTH_LONG).show();
         } else if (!networkUp()) {
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(this, R.string.toast_no_connectivity, Toast.LENGTH_LONG).show();
+            Snackbar.make(coordinatorLayout, getString(R.string.toast_no_connectivity), Snackbar.LENGTH_LONG).show();
         } else if (PrefUtils.getStocks(this).size() == 0) {
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_stocks));
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 swipeRefreshLayout.setRefreshing(true);
             } else {
                 String message = getString(R.string.toast_stock_added_no_connectivity, symbol);
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).show();
             }
 
             PrefUtils.addStock(this, symbol);
