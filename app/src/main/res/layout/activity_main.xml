@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin" />
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:nextFocusForward="@id/fab" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -35,7 +36,9 @@
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"
-        app:pressedTranslationZ="12dp" />
+        app:pressedTranslationZ="12dp"
+        android:contentDescription="@string/button_add_stock_description"
+        android:nextFocusForward="@id/recycler_view" />
 
     <TextView
         android:id="@+id/error"

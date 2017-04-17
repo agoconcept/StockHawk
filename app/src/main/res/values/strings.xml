@@ -18,7 +18,7 @@
     <string name="default_stocks_facebook">FB</string>
 
 
-    <string name="action_change_units">@string/pref_display_mode_key</string>
+    <string name="action_change_units">Change units for showing information about the stocks (absolute or percentage)</string>
 
 
     <string name="dialog_title">Add Stock</string>
@@ -34,4 +34,6 @@
 
     <string name="error_invalid_stock_symbol">Stock symbol \"%s\" not found. Make sure you are connected to the network and the stock exists.</string>
 
+    <!-- ACCESSIBILITY -->
+    <string name="button_add_stock_description">Add stock</string>
 </resources>
