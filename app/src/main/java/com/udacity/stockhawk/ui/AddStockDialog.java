@@ -18,15 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.task.CheckStockTask;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 
 public class AddStockDialog extends DialogFragment {
@@ -78,9 +76,8 @@ public class AddStockDialog extends DialogFragment {
         Activity parent = getActivity();
         String stockSymbol = stock.getText().toString();
 
-        // Check if the stock symbol is valid in another thread, because it needs
-        // to request it over the network
-        AsyncTask task = new CheckStockTask().execute(stockSymbol);
+        // Check if the stock symbol is valid in another thread
+        AsyncTask task = new CheckStockTask(parent.getBaseContext()).execute(stockSymbol);
 
         try {
             // Wait until the request finishes
@@ -100,32 +97,6 @@ public class AddStockDialog extends DialogFragment {
             Timber.w("Operation failed while trying to retrieve stock");
         } finally {
             dismissAllowingStateLoss();
-        }
-    }
-
-    // Get stock in another thread
-    private class CheckStockTask extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... stocks) {
-
-            Boolean stockExists = false;
-            String stockSymbol = stocks[0];
-
-            if (stockSymbol == null || stockSymbol.length() == 0)
-                return false;
-
-            try {
-                Stock stock = YahooFinance.get(stockSymbol);
-                if (stock.getQuote().getPrice() != null) {
-                    stockExists = true;
-                }
-            } catch (IOException exception) {
-                String message = getString(R.string.error_invalid_stock_symbol, stockSymbol);
-                Timber.e(message);
-            }
-
-            return stockExists;
         }
     }
 }
