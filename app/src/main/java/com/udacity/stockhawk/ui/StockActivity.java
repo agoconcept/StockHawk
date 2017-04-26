@@ -9,15 +9,28 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.data.MPChartHelper;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -25,6 +38,8 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
 import yahoofinance.quotes.stock.StockQuote;
 
 public class StockActivity extends AppCompatActivity {
@@ -44,8 +59,8 @@ public class StockActivity extends AppCompatActivity {
     @BindView(R.id.tv_stock_percentage_change)
     TextView tvStockPercentageChange;
 
-    @BindView(R.id.iv_stock_historic_graph)
-    ImageView ivStockHistoricGraph;
+    @BindView(R.id.lc_stock_historic_graph)
+    LineChart lcStockHistoricGraph;
 
     @BindView(R.id.tv_stock_open)
     TextView tvStockOpen;
@@ -155,7 +170,12 @@ public class StockActivity extends AppCompatActivity {
                 return false;
 
             try {
-                stock = YahooFinance.get(stockSymbol);
+                // Retrieve stock information with historical data
+                Calendar from = Calendar.getInstance();
+                Calendar to = Calendar.getInstance();
+                from.add(Calendar.YEAR, -1); // 1 year
+
+                stock = YahooFinance.get(stockSymbol, from, to, Interval.WEEKLY);
                 if (stock.getQuote().getPrice() != null) {
                     stockExists = true;
                 }
@@ -194,6 +214,66 @@ public class StockActivity extends AppCompatActivity {
             tvStockAvgVolume.setText(avgVolume.toString());
             tvStock52wkHigh.setText(dollarFormat.format(yearHigh));
             tvStock52wkLow.setText(dollarFormat.format(yearLow));
+
+            // Set chart data
+            try {
+
+                // Get historical data and reverse it
+                List<HistoricalQuote> list = stock.getHistory();
+                Collections.reverse(list);
+
+                setChart(list);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        private void setChart(List<HistoricalQuote> list) {
+
+            List<Entry> entries = MPChartHelper.populateData(list);
+            String [] labels = MPChartHelper.getXLabels(list);
+
+            LineDataSet dataSet = new LineDataSet(entries, getString(R.string.stock_price));
+
+            final String[] xLabels = labels;
+
+            IAxisValueFormatter formatter = new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return xLabels[(int) value];
+                }
+            };
+
+            XAxis xAxis = lcStockHistoricGraph.getXAxis();
+            xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+            xAxis.setValueFormatter(formatter);
+            xAxis.setTextColor(getColor(R.color.white));
+
+            YAxis leftAxis = lcStockHistoricGraph.getAxisLeft();
+            leftAxis.setTextColor(getColor(R.color.white));
+
+            YAxis rightAxis = lcStockHistoricGraph.getAxisRight();
+            rightAxis.setTextColor(getColor(R.color.white));
+
+            dataSet.setColor(getColor(R.color.colorAccent));
+            dataSet.setCircleColor(getColor(R.color.colorAccent));
+            dataSet.setValueTextColor(getColor(R.color.white));
+            dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+            LineData lineData = new LineData(dataSet);
+            lcStockHistoricGraph.setData(lineData);
+
+            Description description = new Description();
+            description.setText(getString(R.string.chart_history));
+            description.setTextColor(getColor(R.color.white));
+            lcStockHistoricGraph.setDescription(description);
+
+            Legend legend = lcStockHistoricGraph.getLegend();
+            legend.setTextColor(getColor(R.color.white));
+
+            lcStockHistoricGraph.invalidate();
         }
     }
 }

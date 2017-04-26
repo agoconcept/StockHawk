@@ -43,6 +43,9 @@
 
     <string name="unavailable">unavailable</string>
 
+    <string name="stock_price">Stock price</string>
+    <string name="chart_history">52 weeks history</string>
+
     <!-- ACCESSIBILITY -->
     <string name="button_add_stock_description">Add stock</string>
     <string name="stock_history_graph_description">Graph showing the history of the stock</string>
