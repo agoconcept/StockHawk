@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stock_constraint_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_stock_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="GOOG" />
+
+    <TextView
+        android:id="@+id/tv_stock_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Display2"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.301"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_stock_symbol"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_stock_symbol"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        tools:text="$843.19" />
+
+    <TextView
+        android:id="@+id/tv_stock_absolute_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/tv_stock_price"
+        app:layout_constraintTop_toTopOf="@+id/tv_stock_price"
+        tools:text="+$1.54"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_stock_percentage_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_stock_price"
+        app:layout_constraintLeft_toRightOf="@+id/tv_stock_price"
+        tools:text="+0.18%"
+        android:layout_marginBottom="8dp" />
+
+    <ImageView
+        android:id="@+id/iv_stock_historic_graph"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/gl_stock_extra_data"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_stock_price"
+        android:contentDescription="@string/stock_history_graph_description" />
+
+    <GridLayout
+        android:id="@+id/gl_stock_extra_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="horizontal"
+        android:columnCount="4"
+        android:rowCount="3"
+        android:useDefaultMargins="true"
+        android:alignmentMode="alignBounds"
+        android:columnOrderPreserved="false"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <!-- 1st row -->
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:text="@string/stock_open"
+            />
+
+        <TextView
+            android:id="@+id/tv_stock_open"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textAlignment="textEnd"
+            android:textStyle="normal"
+            android:text="@string/unavailable"
+            tools:text="802.27"
+            />
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:text="@string/stock_avg_volume"
+            />
+
+        <TextView
+            android:id="@+id/tv_stock_avg_volume"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textAlignment="textEnd"
+            android:textStyle="normal"
+            android:text="@string/unavailable"
+            tools:text="555.575B"
+            />
+
+        <!-- 2nd row -->
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:text="@string/stock_high"
+            />
+
+        <TextView
+            android:id="@+id/tv_stock_high"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textAlignment="textEnd"
+            android:textStyle="normal"
+            android:text="@string/unavailable"
+            tools:text="816.04"
+            />
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:text="@string/stock_52wk_high"
+            />
+
+        <TextView
+            android:id="@+id/tv_stock_52wk_high"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textAlignment="textEnd"
+            android:textStyle="normal"
+            android:text="@string/unavailable"
+            tools:text="828.91"
+            />
+
+        <!-- 3rd row -->
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:text="@string/stock_low"
+            />
+
+        <TextView
+            android:id="@+id/tv_stock_low"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textAlignment="textEnd"
+            android:textStyle="normal"
+            android:text="@string/unavailable"
+            tools:text="799.62"
+            />
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            android:text="@string/stock_52wk_low"
+            />
+
+        <TextView
+            android:id="@+id/tv_stock_52wk_low"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textAlignment="textEnd"
+            android:textStyle="normal"
+            android:text="@string/unavailable"
+            tools:text="670.70"
+            />
+
+    </GridLayout>
+
+</android.support.constraint.ConstraintLayout>

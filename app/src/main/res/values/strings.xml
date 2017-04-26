@@ -34,6 +34,16 @@
 
     <string name="error_invalid_stock_symbol">Stock symbol \"%s\" not found. Make sure you are connected to the network and the stock exists.</string>
 
+    <string name="stock_open">Open</string>
+    <string name="stock_high">High</string>
+    <string name="stock_low">Low</string>
+    <string name="stock_avg_volume">AvgVolume</string>
+    <string name="stock_52wk_high">52wk high</string>
+    <string name="stock_52wk_low">52wk low</string>
+
+    <string name="unavailable">unavailable</string>
+
     <!-- ACCESSIBILITY -->
     <string name="button_add_stock_description">Add stock</string>
+    <string name="stock_history_graph_description">Graph showing the history of the stock</string>
 </resources>
