@@ -21,13 +21,11 @@ import java.util.List;
 public class WidgetListProvider implements RemoteViewsService.RemoteViewsFactory {
 
     private Context context;
-    private Intent intent;
 
     private List<List> stocksList;
 
     WidgetListProvider(Context context, Intent intent) {
         this.context = context;
-        this.intent = intent;
 
         stocksList = new ArrayList<>();
     }

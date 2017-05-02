@@ -216,7 +216,7 @@ public class StockActivity extends AppCompatActivity {
             tvStockOpen.setText(dollarFormat.format(open));
             tvStockHigh.setText(dollarFormat.format(high));
             tvStockLow.setText(dollarFormat.format(low));
-            tvStockAvgVolume.setText(avgVolume.toString());
+            tvStockAvgVolume.setText(String.format(Locale.US, "%d", avgVolume));
             tvStock52wkHigh.setText(dollarFormat.format(yearHigh));
             tvStock52wkLow.setText(dollarFormat.format(yearLow));
 
