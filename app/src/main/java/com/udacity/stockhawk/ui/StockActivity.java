@@ -44,6 +44,11 @@ import yahoofinance.quotes.stock.StockQuote;
 
 public class StockActivity extends AppCompatActivity {
 
+    public static final String STOCK_SYMBOL = "STOCK_SYMBOL";
+    public static final String STOCK_PRICE = "STOCK_PRICE";
+    public static final String STOCK_ABSOLUTE_CHANGE = "STOCK_ABSOLUTE_CHANGE";
+    public static final String STOCK_PERCENTAGE_CHANGE = "STOCK_PERCENTAGE_CHANGE";
+
     @BindView(R.id.stock_constraint_layout)
     ConstraintLayout constraintLayout;
 
@@ -107,10 +112,10 @@ public class StockActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        symbol = intent.getStringExtra(MainActivity.STOCK_SYMBOL);
-        price = intent.getStringExtra(MainActivity.STOCK_PRICE);
-        absoluteChange = intent.getStringExtra(MainActivity.STOCK_ABSOLUTE_CHANGE);
-        percentageChange = intent.getStringExtra(MainActivity.STOCK_PERCENTAGE_CHANGE);
+        symbol = intent.getStringExtra(STOCK_SYMBOL);
+        price = intent.getStringExtra(STOCK_PRICE);
+        absoluteChange = intent.getStringExtra(STOCK_ABSOLUTE_CHANGE);
+        percentageChange = intent.getStringExtra(STOCK_PERCENTAGE_CHANGE);
 
         setStockData();
     }

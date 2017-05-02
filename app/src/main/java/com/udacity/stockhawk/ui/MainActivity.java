@@ -48,20 +48,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TextView error;
     private StockAdapter adapter;
 
-    public static final String STOCK_SYMBOL = "STOCK_SYMBOL";
-    public static final String STOCK_PRICE = "STOCK_PRICE";
-    public static final String STOCK_ABSOLUTE_CHANGE = "STOCK_ABSOLUTE_CHANGE";
-    public static final String STOCK_PERCENTAGE_CHANGE = "STOCK_PERCENTAGE_CHANGE";
-
     @Override
     public void onClick(String symbol, String price, String absoluteChange, String percentageChange) {
         Timber.d("Symbol clicked: %s", symbol);
 
         Intent intent = new Intent(this, StockActivity.class);
-        intent.putExtra(STOCK_SYMBOL, symbol);
-        intent.putExtra(STOCK_PRICE, price);
-        intent.putExtra(STOCK_ABSOLUTE_CHANGE, absoluteChange);
-        intent.putExtra(STOCK_PERCENTAGE_CHANGE, percentageChange);
+        intent.putExtra(StockActivity.STOCK_SYMBOL, symbol);
+        intent.putExtra(StockActivity.STOCK_PRICE, price);
+        intent.putExtra(StockActivity.STOCK_ABSOLUTE_CHANGE, absoluteChange);
+        intent.putExtra(StockActivity.STOCK_PERCENTAGE_CHANGE, percentageChange);
 
         startActivity(intent);
     }

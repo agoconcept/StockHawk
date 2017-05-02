@@ -46,6 +46,9 @@
     <string name="stock_price">Stock price</string>
     <string name="chart_history">52 weeks history</string>
 
+    <string name="widget_title">StockHawk widget</string>
+    <string name="empty_widget">No stocks to show</string>
+
     <!-- ACCESSIBILITY -->
     <string name="button_add_stock_description">Add stock</string>
     <string name="stock_history_graph_description">Graph showing the history of the stock</string>
